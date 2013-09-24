@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang='en-US' xml:lang='en-US' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>
+      Ruby Extension: HTML Truncation
+       | orangescale
+    </title>
+    <meta charset='UTF-8'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta name="keywords" content="Rails 3, ruby, HTML truncate" />
+    <meta name="author" content="Jonathan Martin" />
+    <link href="/stylesheets/all-6382224b.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/all-cea6830f.js" type="text/javascript"></script>
+    <link rel="alternate" type="application/atom+xml" title="ATOM Feed" href="/feed.xml" />
+    <link href="/images/favicon-126f70fd.png" rel="icon" type="image/png" />
+  </head>
+  <body class='posts posts_ruby-extension-html-truncation posts_ruby-extension-html-truncation_index'>
+    <article>
+      <header>
+        <h1><a href="/pages/about-me">Jonathan Martin</a></h1>
+        <nav>
+          <a href="/">faith,</a>
+          <a href="/">dev</a>
+          <a class="ampersand" href="/">&</a>
+          <a href="/">photography</a>
+        </nav>
+      </header>
+      <section>
+        <article class='solo'>
+          <header>
+            <nav>
+              <time>
+                <a href="/2011/05/">May 2</a>
+                <span class='year'>
+                  <a href="/2011/">2011</a>
+                </span>
+              </time>
+              <span>development</span>
+            </nav>
+            <h1 id="ruby-extension-html-truncation">Ruby Extension: HTML Truncation</h1>
+            <h2>~ by Jonathan Martin</h2>
+          </header>
+          <nav>
+            <ul class='controls'>
+              <li>
+                    <a id="to-top" href="#">&#xe75f;
+                </a>
+            
+              </li>
+              <li>
+                    <a id="to-discussion" title="Join the discussion." href="#disqus_thread">&#xe718;
+                </a>
+            
+              </li>
+              <li>
+                <a title="Email this article to a friend." href="mailto:?subject=Ruby%20Extension%3A%20HTML%20Truncation%0A&body=Hey%20dude%2C%20checkout%20Ruby%20Extension%3A%20HTML%20Truncation%0A%20%28http%3A%2F%2Fnybblr.com%2Fposts%2Fruby-extension-html-truncation%2F%29%20at%20nybblr.com%21">&#x1f53f;</a>
+              </li>
+            </ul>
+            <ul class='social'>
+              <li>
+                    <a class="facebook-share" href="http://www.facebook.com/sharer.php?u=http://nybblr.com/posts/ruby-extension-html-truncation/"><span class='count' id='facebook-count'></span>
+                <span>&#xf30d;</span>
+                </a>
+            
+              </li>
+              <li>
+                    <a target="_blank" class="twitter-share" href="http://twitter.com/share?url=http://nybblr.com/posts/ruby-extension-html-truncation/&via=nybblr&text=Ruby%20Extension:%20HTML%20Truncation%0A"><span class='count' id='twitter-count'></span>
+                <span>&#xf30a;</span>
+                </a>
+            
+              </li>
+              <li>
+                    <a href="#"><span class='count' id='google-count'></span>
+                <span>&#xf310;</span>
+                </a>
+            
+              </li>
+              <li>
+                    <a href="#"><span class='count' id='pinterest-count'></span>
+                <span>&#xf313;</span>
+                </a>
+            
+              </li>
+            </ul>
+          </nav>
+          <section>
+            <p><em>Another tip (err hurdle) I came across during the production of this blog — truncating an HTML string. Easy, right?</em></p>
+            
+            <p>It seems simple enough: shorten some basic text content from a long entry. It’s extremely popular in blogs, catalogs, portfolios, etc. and with good reason — the average browser wants to find content through screening, not mass scrolling.</p>
+            
+            <p>But a good trimmer must keep a few things in mind.</p>
+            
+            <ul>
+              <li>Don’t split words</li>
+              <li>Recognize/respect HTML tags</li>
+              <li>Parse HTML according to standards</li>
+            </ul>
+            
+            <p>These add up to some pretty terse requirements once you actually get to coding. First, unless we want to manually parse HTML, we’ll have to use some standards based parser and loop through all the elements, until the specified number of characters/words (excluding tags!) is exceeded, at which point we append a user-defined tail and discard all other tags.</p>
+            
+            <p><strong>Update:</strong> <em>the latest version of this handy widget is now available as a gem! Check it out at <a href="http://rubygems.org/gems/butter">rubygems.org/gems/butter</a> or bundle it with gem install butter.</em></p>
+            
+            <p>READMORE</p>
+            
+            <h2 id="first-attempt">First attempt</h2>
+            <p>Solution 1 came from a blog, and was then heavily modified to make it work with a more modern interface.</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1&#x000A; 2&#x000A; 3&#x000A; 4&#x000A; 5&#x000A; 6&#x000A; 7&#x000A; 8&#x000A; 9&#x000A;10&#x000A;11&#x000A;12&#x000A;13&#x000A;14&#x000A;15&#x000A;16&#x000A;17&#x000A;18&#x000A;19&#x000A;20&#x000A;21&#x000A;22&#x000A;23&#x000A;24&#x000A;25&#x000A;26&#x000A;27&#x000A;28&#x000A;29&#x000A;30&#x000A;31&#x000A;32&#x000A;33&#x000A;34&#x000A;35&#x000A;36&#x000A;37&#x000A;38&#x000A;39&#x000A;40&#x000A;41&#x000A;42&#x000A;43&#x000A;44&#x000A;45&#x000A;46&#x000A;47&#x000A;48&#x000A;49&#x000A;50&#x000A;51&#x000A;52&#x000A;53&#x000A;54&#x000A;55&#x000A;56</pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;rexml/parsers/pullparser&#39;</span>&#x000A;<span class="nb">require</span> <span class="s1">&#39;htmlentities&#39;</span>&#x000A;&#x000A;<span class="k">class</span> <span class="nc">String</span>&#x000A;  <span class="c1"># Truncate strings containing HTML code</span>&#x000A;  <span class="c1"># Usage example: &quot;string&quot;.truncate_html(50, :word_cut =&gt; false, :tail =&gt; &#39;[+]&#39;)</span>&#x000A;  <span class="k">def</span> <span class="nf">truncate_html</span><span class="p">(</span><span class="n">len</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">opts</span> <span class="o">=</span> <span class="p">{})</span>&#x000A;    <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:word_cut</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:tail</span> <span class="o">=&gt;</span> <span class="s1">&#39;&amp;hellip;&#39;</span><span class="p">}</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>&#x000A;    <span class="nb">p</span> <span class="o">=</span> <span class="ss">REXML</span><span class="p">:</span><span class="ss">:Parsers</span><span class="o">::</span><span class="no">PullParser</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>&#x000A;    <span class="n">coder</span> <span class="o">=</span> <span class="no">HTMLEntities</span><span class="o">.</span><span class="n">new</span>&#x000A;    <span class="n">tags</span> <span class="o">=</span> <span class="o">[]</span>&#x000A;    <span class="n">new_len</span> <span class="o">=</span> <span class="n">len</span>&#x000A;    <span class="n">results</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>&#x000A;    <span class="k">while</span> <span class="nb">p</span><span class="o">.</span><span class="n">has_next?</span> <span class="o">&amp;&amp;</span> <span class="n">new_len</span> <span class="o">&gt;</span> <span class="mi">0</span>&#x000A;      <span class="n">p_e</span> <span class="o">=</span> <span class="nb">p</span><span class="o">.</span><span class="n">pull</span>&#x000A;      <span class="k">case</span> <span class="n">p_e</span><span class="o">.</span><span class="n">event_type</span>&#x000A;      <span class="k">when</span> <span class="ss">:start_element</span>&#x000A;        <span class="n">tags</span><span class="o">.</span><span class="n">push</span> <span class="n">p_e</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>&#x000A;        <span class="n">results</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;</span><span class="si">#{</span><span class="n">tags</span><span class="o">.</span><span class="n">last</span><span class="si">}</span><span class="s2"> </span><span class="si">#{</span><span class="n">attrs_to_s</span><span class="p">(</span><span class="n">p_e</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span><span class="si">}</span><span class="s2">&gt;&quot;</span>&#x000A;      <span class="k">when</span> <span class="ss">:end_element</span>&#x000A;        <span class="n">results</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;/</span><span class="si">#{</span><span class="n">tags</span><span class="o">.</span><span class="n">pop</span><span class="si">}</span><span class="s2">&gt;&quot;</span>&#x000A;      <span class="k">when</span> <span class="ss">:text</span>&#x000A;        <span class="n">text</span> <span class="o">=</span> <span class="n">coder</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">p_e</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="p">)</span>&#x000A;        <span class="k">if</span> <span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="n">new_len</span><span class="p">)</span> <span class="ow">and</span> <span class="o">!</span><span class="n">opts</span><span class="o">[</span><span class="ss">:word_cut</span><span class="o">]</span>&#x000A;          <span class="n">piece</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">text</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">new_len</span><span class="p">))</span>&#x000A;        <span class="k">else</span>&#x000A;          <span class="n">piece</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="n">new_len</span><span class="p">)</span>&#x000A;        <span class="k">end</span>&#x000A;        <span class="n">results</span> <span class="o">&lt;&lt;</span> <span class="n">coder</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">piece</span><span class="p">)</span>&#x000A;        <span class="n">new_len</span> <span class="o">-=</span> <span class="n">text</span><span class="o">.</span><span class="n">length</span>&#x000A;      <span class="k">else</span>&#x000A;        <span class="n">results</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;!-- </span><span class="si">#{</span><span class="n">p_e</span><span class="o">.</span><span class="n">inspect</span><span class="si">}</span><span class="s2"> --&gt;&quot;</span>&#x000A;      <span class="k">end</span>&#x000A;    <span class="k">end</span>&#x000A;    <span class="n">tags</span><span class="o">.</span><span class="n">reverse</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">tag</span><span class="o">|</span>&#x000A;      <span class="n">results</span> <span class="o">&lt;&lt;</span> <span class="s2">&quot;&lt;/</span><span class="si">#{</span><span class="n">tag</span><span class="si">}</span><span class="s2">&gt;&quot;</span>&#x000A;    <span class="k">end</span>&#x000A;    <span class="n">results</span> <span class="o">&lt;&lt;</span> <span class="n">opts</span><span class="o">[</span><span class="ss">:tail</span><span class="o">]</span>&#x000A;&#x000A;    <span class="k">if</span> <span class="n">html_safe?</span> <span class="k">then</span>&#x000A;      <span class="n">results</span><span class="o">.</span><span class="n">html_safe</span>&#x000A;    <span class="k">else</span>&#x000A;      <span class="n">results</span>&#x000A;    <span class="k">end</span>&#x000A;  <span class="k">end</span>&#x000A;&#x000A;  <span class="kp">private</span>&#x000A;&#x000A;  <span class="k">def</span> <span class="nf">attrs_to_s</span><span class="p">(</span><span class="n">attrs</span><span class="p">)</span>&#x000A;    <span class="k">if</span> <span class="n">attrs</span><span class="o">.</span><span class="n">empty?</span>&#x000A;      <span class="s1">&#39;&#39;</span>&#x000A;    <span class="k">else</span>&#x000A;      <span class="n">attrs</span><span class="o">.</span><span class="n">to_a</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="kp">attr</span><span class="o">|</span> <span class="sx">%{</span><span class="si">#{</span><span class="kp">attr</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span><span class="si">}</span><span class="sx">=&quot;</span><span class="si">#{</span><span class="kp">attr</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="si">}</span><span class="sx">&quot;}</span> <span class="p">}</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>&#x000A;    <span class="k">end</span>&#x000A;  <span class="k">end</span>&#x000A;<span class="k">end</span></pre></div>
+            </td></tr></table>
+            <p>This worked great…at first. All went well in development, but once I launched into production and started using slightly more complex HTML, it completely crashed the index pages. What was the cause? An <code>&lt;em&gt;</code> tag. Why? I have no clue, but I know where the problem occured: the REXML parser. On top of being an outdated parser (I suppose that includes choking on em tags), it is one of the <strong>slowest</strong> parsers out there. So it looked like my nice little online script was about useless, and frankly it seemed way too complex/inelegant for our modern gem-based apps.</p>
+            
+            <h2 id="final-attempt">Final attempt</h2>
+            <p>Thankfully though, with some more searching I found an elegant solution using Nokogiri (the best parser gem by far!) and some creative word boundary logic. The bulk of this code (and comments) was designed by <a href="http://github.com/Eleo">Eleo</a>, but I modified the interface a bit (instance method instead of class method) and added a few other tweaks.</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1&#x000A; 2&#x000A; 3&#x000A; 4&#x000A; 5&#x000A; 6&#x000A; 7&#x000A; 8&#x000A; 9&#x000A;10&#x000A;11&#x000A;12&#x000A;13&#x000A;14&#x000A;15&#x000A;16&#x000A;17&#x000A;18&#x000A;19&#x000A;20&#x000A;21&#x000A;22&#x000A;23&#x000A;24&#x000A;25&#x000A;26&#x000A;27&#x000A;28&#x000A;29&#x000A;30&#x000A;31&#x000A;32&#x000A;33&#x000A;34&#x000A;35&#x000A;36&#x000A;37&#x000A;38&#x000A;39&#x000A;40&#x000A;41&#x000A;42&#x000A;43&#x000A;44&#x000A;45&#x000A;46&#x000A;47&#x000A;48&#x000A;49&#x000A;50&#x000A;51&#x000A;52&#x000A;53&#x000A;54&#x000A;55&#x000A;56&#x000A;57&#x000A;58&#x000A;59&#x000A;60&#x000A;61&#x000A;62&#x000A;63&#x000A;64&#x000A;65&#x000A;66&#x000A;67&#x000A;68&#x000A;69&#x000A;70&#x000A;71&#x000A;72&#x000A;73&#x000A;74&#x000A;75&#x000A;76&#x000A;77&#x000A;78&#x000A;79&#x000A;80&#x000A;81&#x000A;82&#x000A;83&#x000A;84&#x000A;85&#x000A;86&#x000A;87&#x000A;88&#x000A;89&#x000A;90&#x000A;91&#x000A;92&#x000A;93&#x000A;94&#x000A;95&#x000A;96&#x000A;97&#x000A;98</pre></div></td><td class="code"><div class="highlight"><pre><span class="nb">require</span> <span class="s1">&#39;nokogiri&#39;</span>&#x000A;<span class="nb">require</span> <span class="s1">&#39;htmlentities&#39;</span>&#x000A;&#x000A;<span class="k">class</span> <span class="nc">String</span>&#x000A;  <span class="k">def</span> <span class="nf">truncate_html</span><span class="p">(</span><span class="n">num_words</span> <span class="o">=</span> <span class="mi">30</span><span class="p">,</span> <span class="n">opts</span> <span class="o">=</span> <span class="p">{})</span>&#x000A;    <span class="n">opts</span> <span class="o">=</span> <span class="p">{</span><span class="ss">:word_cut</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">:tail</span> <span class="o">=&gt;</span> <span class="s2">&quot;&amp;hellip;&quot;</span><span class="p">}</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span>&#x000A;    <span class="n">tail</span> <span class="o">=</span> <span class="no">HTMLEntities</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">opts</span><span class="o">[</span><span class="ss">:tail</span><span class="o">]</span><span class="p">)</span>&#x000A;&#x000A;    <span class="n">doc</span> <span class="o">=</span> <span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>&#x000A;&#x000A;    <span class="n">current</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">first</span>&#x000A;    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>&#x000A;&#x000A;    <span class="k">while</span> <span class="kp">true</span>&#x000A;      <span class="c1"># we found a text node</span>&#x000A;      <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:XML</span><span class="o">::</span><span class="no">Text</span><span class="p">)</span>&#x000A;        <span class="n">count</span> <span class="o">+=</span> <span class="n">current</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="o">.</span><span class="n">length</span>&#x000A;        <span class="c1"># we reached our limit, let&#39;s get outta here!</span>&#x000A;        <span class="k">break</span> <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="n">num_words</span>&#x000A;        <span class="n">previous</span> <span class="o">=</span> <span class="n">current</span>&#x000A;      <span class="k">end</span>&#x000A;&#x000A;      <span class="k">if</span> <span class="n">current</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span>&#x000A;        <span class="c1"># this node has children, can&#39;t be a text node,</span>&#x000A;        <span class="c1"># lets descend and look for text nodes</span>&#x000A;        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">first</span>&#x000A;      <span class="k">elsif</span> <span class="o">!</span><span class="n">current</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">nil?</span>&#x000A;        <span class="c1">#this has no children, but has a sibling, let&#39;s check it out</span>&#x000A;        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">next</span>&#x000A;      <span class="k">else</span>&#x000A;        <span class="c1"># we are the last child, we need to ascend until we are</span>&#x000A;        <span class="c1"># either done or find a sibling to continue on to</span>&#x000A;        <span class="n">n</span> <span class="o">=</span> <span class="n">current</span>&#x000A;        <span class="k">while</span> <span class="o">!</span><span class="n">n</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="o">::</span><span class="no">Document</span><span class="p">)</span> <span class="ow">and</span> <span class="n">n</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">nil?</span>&#x000A;          <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">parent</span>&#x000A;        <span class="k">end</span>&#x000A;&#x000A;        <span class="c1"># we&#39;ve reached the top and found no more text nodes, break</span>&#x000A;        <span class="k">if</span> <span class="n">n</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="o">::</span><span class="no">Document</span><span class="p">)</span>&#x000A;          <span class="k">break</span><span class="p">;</span>&#x000A;        <span class="k">else</span>&#x000A;          <span class="n">current</span> <span class="o">=</span> <span class="n">n</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">next</span>&#x000A;        <span class="k">end</span>&#x000A;      <span class="k">end</span>&#x000A;    <span class="k">end</span>&#x000A;&#x000A;    <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="n">num_words</span>&#x000A;      <span class="k">unless</span> <span class="n">count</span> <span class="o">==</span> <span class="n">num_words</span>&#x000A;      <span class="n">new_content</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span>&#x000A;&#x000A;      <span class="c1"># If we&#39;re here, the last text node we counted eclipsed the number of words</span>&#x000A;      <span class="c1"># that we want, so we need to cut down on words.  The easiest way to think about</span>&#x000A;      <span class="c1"># this is that without this node we&#39;d have fewer words than the limit, so all</span>&#x000A;      <span class="c1"># the previous words plus a limited number of words from this node are needed.</span>&#x000A;      <span class="c1"># We simply need to figure out how many words are needed and grab that many.</span>&#x000A;      <span class="c1"># Then we need to -subtract- an index, because the first word would be index zero.</span>&#x000A;&#x000A;      <span class="c1"># For example, given:</span>&#x000A;      <span class="c1"># &lt;p&gt;Testing this HTML truncater.&lt;/p&gt;&lt;p&gt;To see if its working.&lt;/p&gt;</span>&#x000A;      <span class="c1"># Let&#39;s say I want 6 words.  The correct returned string would be:</span>&#x000A;      <span class="c1"># &lt;p&gt;Testing this HTML truncater.&lt;/p&gt;&lt;p&gt;To see...&lt;/p&gt;</span>&#x000A;      <span class="c1"># All the words in both paragraphs = 9</span>&#x000A;      <span class="c1"># The last paragraph is the one that breaks the limit.  How many words would we</span>&#x000A;      <span class="c1"># have without it? 4.  But we want up to 6, so we might as well get that many.</span>&#x000A;      <span class="c1"># 6 - 4 = 2, so we get 2 words from this node, but words #1-2 are indices #0-1, so</span>&#x000A;      <span class="c1"># we subtract 1.  If this gives us -1, we want nothing from this node. So go back to</span>&#x000A;      <span class="c1"># the previous node instead.</span>&#x000A;      <span class="n">index</span> <span class="o">=</span> <span class="n">num_words</span><span class="o">-</span><span class="p">(</span><span class="n">count</span><span class="o">-</span><span class="n">new_content</span><span class="o">.</span><span class="n">length</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>&#x000A;      <span class="k">if</span> <span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span>&#x000A;      <span class="n">new_content</span> <span class="o">=</span> <span class="n">new_content</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.index</span><span class="o">]</span>&#x000A;        <span class="n">current</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">new_content</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">tail</span>&#x000A;        <span class="k">else</span>&#x000A;        <span class="n">current</span> <span class="o">=</span> <span class="n">previous</span>&#x000A;        <span class="n">current</span><span class="o">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">content</span> <span class="o">+</span> <span class="n">tail</span>&#x000A;      <span class="k">end</span>&#x000A;      <span class="k">end</span>&#x000A;&#x000A;      <span class="c1"># remove everything else</span>&#x000A;      <span class="k">while</span> <span class="o">!</span><span class="n">current</span><span class="o">.</span><span class="n">is_a?</span><span class="p">(</span><span class="ss">Nokogiri</span><span class="p">:</span><span class="ss">:HTML</span><span class="o">::</span><span class="no">Document</span><span class="p">)</span>&#x000A;        <span class="k">while</span> <span class="o">!</span><span class="n">current</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">nil?</span>&#x000A;          <span class="n">current</span><span class="o">.</span><span class="n">next</span><span class="o">.</span><span class="n">remove</span>&#x000A;        <span class="k">end</span>&#x000A;        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">parent</span>&#x000A;      <span class="k">end</span>&#x000A;    <span class="k">end</span>&#x000A;&#x000A;    <span class="c1"># now we grab the html and not the text.</span>&#x000A;    <span class="c1"># we do first because nokogiri adds html and body tags</span>&#x000A;    <span class="c1"># which we don&#39;t want</span>&#x000A;    <span class="n">truncated</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">children</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">inner_html</span>&#x000A;&#x000A;    <span class="k">if</span> <span class="n">html_safe?</span>&#x000A;      <span class="n">truncated</span><span class="o">.</span><span class="n">html_safe</span>&#x000A;    <span class="k">else</span>&#x000A;      <span class="n">truncated</span>&#x000A;    <span class="k">end</span>&#x000A;  <span class="k">end</span>&#x000A;<span class="k">end</span></pre></div>
+            </td></tr></table>
+            <p>I’ve been really happy with the success of this particular implementation. In addition to using Nokogiri, the code is easier to understand and allows for the input of a number of words, rather than number of characters.</p>
+            
+            <h2 id="future-additions">Future additions</h2>
+            <p>One of the tweaks I made was the options hash, as I foresee eventually adding more options to the truncate operation, such as using a character count as the length, ability to split before the word boundary, etc. For the moment however, this approach has worked really well. Remember to add this code to <code>string.rb</code> in your lib directory, and include it with <code>auto_require</code>.</p>
+            
+            <p>As always, if you guys have any other options you think might be useful to the <code>truncate_html</code> method, or alternate solutions for that matter, mention it in the comments!</p>
+            <span class='tags'>
+              Tagged as
+              <a href="/tags/rails/">rails,</a>
+              <a href="/tags/rails-3/">rails-3,</a>
+              <a href="/tags/ruby/">ruby,</a>
+              <a href="/tags/extension/">extension,</a>
+              <a href="/tags/html/">html,</a>
+              <a href="/tags/truncate/">truncate.</a>
+            </span>
+          </section>
+          <footer>
+            <div id='disqus_thread'></div>
+            <script>
+              (function() {
+                var disque_developer, disqus_shortname;
+              
+                disqus_shortname = 'orangescale';
+              
+                disque_developer = 1;
+              
+                $(function() {
+                  var dsq;
+                  dsq = document.createElement('script');
+                  dsq.type = 'text/javascript';
+                  dsq.async = true;
+                  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                  return document.getElementsByTagName('head')[0].appendChild(dsq);
+                });
+              
+              }).call(this);
+            </script>
+            <noscript>
+              Please enable JavaScript to view the
+              <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+          </footer>
+        </article>
+      </section>
+    </article>
+    <footer>
+      <nav>
+        <a href="/pages/about-me">about me,</a>
+        <a href="/pages/contact-me">get in touch.</a>
+        <a class="social" href="http://twitter.com/nybblr">follow me on twitter</a>
+      </nav>
+    </footer>
+  </body>
+</html>
+
+

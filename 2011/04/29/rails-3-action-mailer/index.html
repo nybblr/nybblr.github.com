@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang='en-US' xml:lang='en-US' xmlns='http://www.w3.org/1999/xhtml'>
+  <head>
+    <title>
+      Rails 3: Action Mailer
+       | orangescale
+    </title>
+    <meta charset='UTF-8'>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <meta name="keywords" content="Rails 3, ruby, Action Mailer" />
+    <meta name="author" content="Jonathan Martin" />
+    <link href="/stylesheets/all-6382224b.css" media="all" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/all-cea6830f.js" type="text/javascript"></script>
+    <link rel="alternate" type="application/atom+xml" title="ATOM Feed" href="/feed.xml" />
+    <link href="/images/favicon-126f70fd.png" rel="icon" type="image/png" />
+  </head>
+  <body class='2011 2011_04 2011_04_29 2011_04_29_rails-3-action-mailer 2011_04_29_rails-3-action-mailer_index'>
+    <article>
+      <header>
+        <h1><a href="/pages/about-me">Jonathan Martin</a></h1>
+        <nav>
+          <a href="/">faith,</a>
+          <a href="/">dev</a>
+          <a class="ampersand" href="/">&</a>
+          <a href="/">photography</a>
+        </nav>
+      </header>
+      <section>
+        <article class='solo'>
+          <header>
+            <nav>
+              <time>
+                <a href="/2011/04/">Apr 29</a>
+                <span class='year'>
+                  <a href="/2011/">2011</a>
+                </span>
+              </time>
+              <span>development</span>
+            </nav>
+            <h1 id="rails-3-action-mailer">Rails 3: Action Mailer</h1>
+            <h2>~ by Jonathan Martin</h2>
+          </header>
+          <nav>
+            <ul class='controls'>
+              <li>
+                    <a id="to-top" href="#">&#xe75f;
+                </a>
+            
+              </li>
+              <li>
+                    <a id="to-discussion" title="Join the discussion." href="#disqus_thread">&#xe718;
+                </a>
+            
+              </li>
+              <li>
+                <a title="Email this article to a friend." href="mailto:?subject=Rails%203%3A%20Action%20Mailer%0A&body=Hey%20dude%2C%20checkout%20Rails%203%3A%20Action%20Mailer%0A%20%28http%3A%2F%2Fnybblr.com%2F2011%2F04%2F29%2Frails-3-action-mailer%2F%29%20at%20nybblr.com%21">&#x1f53f;</a>
+              </li>
+            </ul>
+            <ul class='social'>
+              <li>
+                    <a class="facebook-share" href="http://www.facebook.com/sharer.php?u=http://nybblr.com/2011/04/29/rails-3-action-mailer/"><span class='count' id='facebook-count'></span>
+                <span>&#xf30d;</span>
+                </a>
+            
+              </li>
+              <li>
+                    <a target="_blank" class="twitter-share" href="http://twitter.com/share?url=http://nybblr.com/2011/04/29/rails-3-action-mailer/&via=nybblr&text=Rails%203:%20Action%20Mailer%0A"><span class='count' id='twitter-count'></span>
+                <span>&#xf30a;</span>
+                </a>
+            
+              </li>
+              <li>
+                    <a href="#"><span class='count' id='google-count'></span>
+                <span>&#xf310;</span>
+                </a>
+            
+              </li>
+              <li>
+                    <a href="#"><span class='count' id='pinterest-count'></span>
+                <span>&#xf313;</span>
+                </a>
+            
+              </li>
+            </ul>
+          </nav>
+          <section>
+            <p>As a result of designing this blog, I’ve come to appreciate the refinement of Rails 3, and the drudgery of a few “less than perfect” spots.</p>
+            
+            <p>ActionMailer (now powered by the Mail gem instead of TMail) is an incredible refactoring of the traditional Rails 2.x email system; frankly, before Rails 3, the email system was anything but elegant — besides the clunky API, none of the traditional view helpers were available, and multipart emails with attachments were hackish.</p>
+            
+            <p>The new system takes a huge step in the right direction by incorporating a sleek API interface and merge of ActionMailer with the traditional ActionController/ActionView. In essence, whereas before the mailer and controller/views were entirely separate entities, ActionMailer now inherits from these classes, and consequently acts much more like a traditional view. This approach <strong>hugely</strong> simplifies the design process by recognizing the similarity between HTML webpages and HTML email.</p>
+            
+            <p></p>
+            
+            <p><strong>However,</strong> I still have a few “nits to pick.” There are still a number of kinks in the ActionMailer, which I will address here.</p>
+            
+            <h2 id="named-tofrom-addresses">Named to/from addresses</h2>
+            <p>Admittedly, this isn’t a biggy, but it’d be a nice addition. Currently, if you want to include a name in the from/to address, you have to manually form the string.</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1&#x000A;2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">mail</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="se">\&quot;</span><span class="si">#{</span><span class="vi">@name</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2"> &lt;</span><span class="si">#{</span><span class="vi">@email</span><span class="si">}</span><span class="s2">&gt;&quot;</span><span class="p">,</span>&#x000A;     <span class="ss">:subject</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="vi">@name</span><span class="si">}</span><span class="s2"> left a comment&quot;</span></pre></div>
+            </td></tr></table>
+            <p>For me, this is just difficult to read, and I easily crashed my application with misplaced quote/hash marks. I’d prefer something like:</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1&#x000A;2</pre></div></td><td class="code"><div class="highlight"><pre><span class="n">mail</span> <span class="ss">:to</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:email</span> <span class="o">=&gt;</span> <span class="vi">@email</span><span class="p">,</span> <span class="ss">:name</span> <span class="o">=&gt;</span> <span class="vi">@name</span> <span class="p">},</span>&#x000A;     <span class="ss">:subject</span> <span class="o">=&gt;</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="vi">@name</span><span class="si">}</span><span class="s2"> left a comment&quot;</span></pre></div>
+            </td></tr></table>
+            <p>Perhaps it’s a little more text, but it is infinitely more readable for those of us that don’t enjoy mental text escaping.</p>
+            
+            <h2 id="simpleformat">simple_format</h2>
+            <p>To my knowledge, this is simply a 3.0.5 bug, but if you call simple_format from the email template (to render out line breaks), the behavior you get is terribly unusual, and it turns out this helper is overwritten with a private method.</p>
+            
+            <p>Until the private method is renamed in a later version, I had to make a custom helper method (basically a copy paste from the original <code>simple_format</code> source) and called it <code>simpler_format</code>.</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1&#x000A; 2&#x000A; 3&#x000A; 4&#x000A; 5&#x000A; 6&#x000A; 7&#x000A; 8&#x000A; 9&#x000A;10</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">def</span> <span class="nf">simpler_format</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">html_options</span><span class="o">=</span><span class="p">{},</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>&#x000A;  <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">html_safe</span> <span class="k">if</span> <span class="n">text</span><span class="o">.</span><span class="n">nil?</span>&#x000A;  <span class="n">start_tag</span> <span class="o">=</span> <span class="n">tag</span><span class="p">(</span><span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="n">html_options</span><span class="p">,</span> <span class="kp">true</span><span class="p">)</span>&#x000A;  <span class="n">text</span> <span class="o">=</span> <span class="n">sanitize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="k">unless</span> <span class="n">options</span><span class="o">[</span><span class="ss">:sanitize</span><span class="o">]</span> <span class="o">==</span> <span class="kp">false</span>&#x000A;  <span class="n">text</span><span class="o">.</span><span class="n">gsub!</span><span class="p">(</span><span class="sr">/\r\n?/</span><span class="p">,</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>                    <span class="c1"># \r\n and \r -&gt; \n</span>&#x000A;  <span class="n">text</span><span class="o">.</span><span class="n">gsub!</span><span class="p">(</span><span class="sr">/\n\n+/</span><span class="p">,</span> <span class="s2">&quot;&lt;/p&gt;</span><span class="se">\n\n</span><span class="si">#{</span><span class="n">start_tag</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># 2+ newline  -&gt; paragraph</span>&#x000A;  <span class="n">text</span><span class="o">.</span><span class="n">gsub!</span><span class="p">(</span><span class="sr">/([^\n]\n)(?=[^\n])/</span><span class="p">,</span> <span class="s1">&#39;\1&lt;br /&gt;&#39;</span><span class="p">)</span> <span class="c1"># 1 newline   -&gt; br</span>&#x000A;  <span class="n">text</span><span class="o">.</span><span class="n">insert</span> <span class="mi">0</span><span class="p">,</span> <span class="n">start_tag</span>&#x000A;  <span class="n">text</span><span class="o">.</span><span class="n">html_safe</span><span class="o">.</span><span class="n">safe_concat</span><span class="p">(</span><span class="s2">&quot;&lt;/p&gt;&quot;</span><span class="p">)</span>&#x000A;<span class="k">end</span></pre></div>
+            </td></tr></table>
+            <p>But wait, how you do use custom helpers in an email template? Well, that’s next.</p>
+            
+            <h2 id="custom-mailer-helpers">Custom mailer helpers</h2>
+            <p>It turns out that helpers are not included by default for the ActionMailer views — while it may make sense not to do so simply because you don’t usually need the webpage helpers in emails, I found myself needing several of my helpers, simply because the emails I send out are meant to vaguely resemble the website. At any rate, it’s not a deal breaker, but I think Rails 3 could stand to have auto-generated helper files that are auto-included for each mailer. Finally, just for kicks the “helper” method ought to include the :all option that is available in ActionView.</p>
+            
+            <p>I made a module called MailHelper in the helpers directory, then included it with the classic “helper :name” command from the mailer model.</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1&#x000A;2&#x000A;3&#x000A;4</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">CommentMailer</span> <span class="o">&lt;</span> <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span>&#x000A;  <span class="n">helper</span> <span class="ss">:mail</span><span class="p">,</span> <span class="ss">:layout</span>&#x000A;  <span class="o">.</span><span class="n">.</span><span class="o">.</span>&#x000A;<span class="k">end</span></pre></div>
+            </td></tr></table>
+            <p>As you can see, I also included my layout helper, which has all of my convenient layout “yields” — these come in handy for webpages and HTML email.</p>
+            
+            <h2 id="absolute-path-defaulthost-and-assethost">Absolute path: default_host and asset_host</h2>
+            <p>I had a less than enjoyable time trying to get <code>link_to</code>, <code>image_tag</code>, and <code>post_url</code> to output absolute urls instead of the traditional relative path. From what I had read, you simply have to add the following configuration to your environment.rb:</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">default_url_options</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;nybblr.com&quot;</span></pre></div>
+            </td></tr></table>
+            <p>That should do the trick, right? Well…no. That changed in Rails 3 with the move to ActionMailer, so now the config option is:</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">default_url_options</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;nybblr.com&quot;</span></pre></div>
+            </td></tr></table>
+            <p>This seemed to work great for <code>link_to</code> and <code>path_url</code>, but when I tried <code>image_tag</code>, I again was back to relative paths. Turns out there is yet another option for both ActionController and ActionMailer necessary for “asset” files (in case they are hosted on another server).</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1&#x000A;2&#x000A;3</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1"># Notice that the host must be prefixed with &quot;http://&quot; since it assumes the host is a full web URI.</span>&#x000A;<span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">asset_host</span> <span class="o">=</span> <span class="s1">&#39;http://nybblr.com&#39;</span>&#x000A;<span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">asset_host</span> <span class="o">=</span> <span class="s1">&#39;http://nybblr.com&#39;</span></pre></div>
+            </td></tr></table>
+            <p>So this seems to work, but frankly I hate hardcoding in host URLs — I wanted this to work in development and production <strong>regardless</strong> of the host domain, so to do that I would have to call <code>request.host_with_port</code>. However, since the request object is only available in the controllers/views, we need to set those configuration options before the actions. I accomplished this with a before filter:</p>
+            
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1&#x000A; 2&#x000A; 3&#x000A; 4&#x000A; 5&#x000A; 6&#x000A; 7&#x000A; 8&#x000A; 9&#x000A;10&#x000A;11&#x000A;12&#x000A;13&#x000A;14&#x000A;15</pre></div></td><td class="code"><div class="highlight"><pre><span class="k">class</span> <span class="nc">ApplicationController</span> <span class="o">&lt;</span> <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span>&#x000A;  <span class="n">before_filter</span> <span class="ss">:configure_default_host</span>&#x000A;&#x000A;  <span class="o">.</span><span class="n">.</span><span class="o">.</span>&#x000A;&#x000A;  <span class="kp">private</span>&#x000A;&#x000A;  <span class="k">def</span> <span class="nf">configure_default_host</span>&#x000A;    <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">default_url_options</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">host_with_port</span>&#x000A;    <span class="ss">ActionController</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">asset_host</span> <span class="o">=</span> <span class="s1">&#39;http://&#39;</span><span class="o">+</span><span class="n">request</span><span class="o">.</span><span class="n">host_with_port</span>&#x000A;    <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">default_url_options</span><span class="o">[</span><span class="ss">:host</span><span class="o">]</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">host_with_port</span>&#x000A;    <span class="ss">ActionMailer</span><span class="p">:</span><span class="ss">:Base</span><span class="o">.</span><span class="n">asset_host</span> <span class="o">=</span> <span class="s1">&#39;http://&#39;</span><span class="o">+</span><span class="n">request</span><span class="o">.</span><span class="n">host_with_port</span>&#x000A;  <span class="k">end</span>&#x000A;  <span class="o">.</span><span class="n">.</span><span class="o">.</span>&#x000A;<span class="k">end</span></pre></div>
+            </td></tr></table>
+            <p>This worked perfectly; granted, I didn’t like having to clutter up my ApplicationController, but that is far better than manually rendering links/overwriting asset helpers in the email templates, hardwiring hosts, and cluttering up the view.</p>
+            
+            <h2 id="so-now-that-im-done-bashing-actionmailer">So now that I’m done bashing ActionMailer…</h2>
+            <p>ActionMailer really is a <em>huge</em> relief compared to 2.x; I’d say it’s a pretty remarkable Rails achievement. It’s just shy of perfection.</p>
+            <span class='tags'>
+              Tagged as
+              <a href="/tags/rails/">rails,</a>
+              <a href="/tags/rails-3/">rails-3,</a>
+              <a href="/tags/ruby/">ruby,</a>
+              <a href="/tags/action-mailer/">action-mailer,</a>
+              <a href="/tags/wishlist/">wishlist.</a>
+            </span>
+          </section>
+          <footer>
+            <div id='disqus_thread'></div>
+            <script>
+              (function() {
+                var disque_developer, disqus_shortname;
+              
+                disqus_shortname = 'orangescale';
+              
+                disque_developer = 1;
+              
+                $(function() {
+                  var dsq;
+                  dsq = document.createElement('script');
+                  dsq.type = 'text/javascript';
+                  dsq.async = true;
+                  dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                  return document.getElementsByTagName('head')[0].appendChild(dsq);
+                });
+              
+              }).call(this);
+            </script>
+            <noscript>
+              Please enable JavaScript to view the
+              <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+            </noscript>
+          </footer>
+        </article>
+      </section>
+    </article>
+    <footer>
+      <nav>
+        <a href="/pages/about-me">about me,</a>
+        <a href="/pages/contact-me">get in touch.</a>
+        <a class="social" href="http://twitter.com/nybblr">follow me on twitter</a>
+      </nav>
+    </footer>
+  </body>
+</html>
+
+
