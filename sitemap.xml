@@ -58,6 +58,9 @@
     <loc>http://nybblr.com/2013/09/24/kissing-simplicity-goodbye/</loc>
   </url>
   <url>
+    <loc>http://nybblr.com/2015/01/02/backend-meet-frontend/</loc>
+  </url>
+  <url>
     <loc>http://nybblr.com/pages/about-me/</loc>
   </url>
   <url>
@@ -68,6 +71,9 @@
   </url>
   <url>
     <loc>http://nybblr.com/CNAME</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/posts/backend-meet-frontend/</loc>
   </url>
   <url>
     <loc>http://nybblr.com/posts/kissing-simplicity-goodbye/</loc>
@@ -245,6 +251,24 @@
   </url>
   <url>
     <loc>http://nybblr.com/tags/principles/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/tags/bower/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/tags/heroku/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/tags/better-together/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/2015/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/2015/01/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/2015/01/02/</loc>
   </url>
   <url>
     <loc>http://nybblr.com/2013/</loc>

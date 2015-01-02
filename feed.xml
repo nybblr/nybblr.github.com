@@ -5,10 +5,160 @@
   <id>http://nybblr.com/</id>
   <link href="http://nybblr.com/"/>
   <link href="http://nybblr.com/feed.xml" rel="self"/>
-  <updated>2013-09-24T00:00:00Z</updated>
+  <updated>2015-01-02T00:00:00Z</updated>
   <author>
     <name>Jonathan Martin</name>
   </author>
+  <entry>
+    <title>Backend, Meet Frontend: Managing Assets with Bower
+</title>
+    <link rel="alternate" href="/2015/01/02/backend-meet-frontend/"/>
+    <id>/2015/01/02/backend-meet-frontend/</id>
+    <published>2015-01-02T00:00:00Z</published>
+    <updated>2015-01-02T00:00:00Z</updated>
+    <author>
+      <name>Jonathan Martin</name>
+    </author>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;TL;DR: Don’t manage vendor assets with Rails gems, use Bower and NPM. &lt;a href="https://gist.github.com/nybblr/99f16afa33d71382a33b"&gt;Checkout the gist for quick reference.&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;So you’ve knocked out a few epics in Pivotal Tracker and have an MVP ready for Heroku, when your project manager announces that the Bootstrap-based frontend and choice of colors will likely turn off investors.&lt;/p&gt;
+
+&lt;p&gt;To mitigate your “button-and-text soup,” he decides to hire a graphic designer and frontend developer to clobber your beautifully simple Rails app with masses of minified JavaScript, Convoluted Style Sheets, and litter your &lt;code&gt;slim&lt;/code&gt; templates with classes and data attributes.&lt;/p&gt;
+
+&lt;p&gt;</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;TL;DR: Don’t manage vendor assets with Rails gems, use Bower and NPM. &lt;a href="https://gist.github.com/nybblr/99f16afa33d71382a33b"&gt;Checkout the gist for quick reference.&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;So you’ve knocked out a few epics in Pivotal Tracker and have an MVP ready for Heroku, when your project manager announces that the Bootstrap-based frontend and choice of colors will likely turn off investors.&lt;/p&gt;
+
+&lt;p&gt;To mitigate your “button-and-text soup,” he decides to hire a graphic designer and frontend developer to clobber your beautifully simple Rails app with masses of minified JavaScript, Convoluted Style Sheets, and litter your &lt;code&gt;slim&lt;/code&gt; templates with classes and data attributes.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;While you aren’t enthusiastic about gutting your clever Bootstrap forms to make way for some unheard of grid system (which doesn’t even have buttons), you acquiesce in hopes of a year-end bonus for your admirable cooperation. At least, until the frontend developer commits a mass of unreadable, minified JavaScript to &lt;code&gt;public&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Naturally, you scold him and inform him of Rails’ asset pipeline. When he chucks &lt;code&gt;jquery-2.1.0.min.js&lt;/code&gt; under &lt;code&gt;app/assets/javascripts&lt;/code&gt;, you set him straight and tell him that only code written specifically for the app belongs there, not vendor code. Next pull request, you find those assets have been moved to &lt;code&gt;lib/assets&lt;/code&gt;, &lt;a href="http://guides.rubyonrails.org/asset_pipeline.html#asset-organization"&gt;which is a definite no-go.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;To bypass further confusion, you kindly alert your cohort that &lt;code&gt;jquery&lt;/code&gt; is bundled in the Gemfile, and in fact the tooltip library he committed to &lt;code&gt;lib/assets/javascripts&lt;/code&gt; is part of the &lt;code&gt;jquery-ui-bootstrap-rails&lt;/code&gt; gem. The gem integrates with the asset pipeline, and will be far more elegant than copy-pasting an unversioned &lt;code&gt;.min.js&lt;/code&gt; to random directories.&lt;/p&gt;
+
+&lt;p&gt;Your unenlightened cohort, in a moment of disgust, declares he will be adding NPM to the pipeline for asset vendoring. You offer up &lt;code&gt;coffee-rails&lt;/code&gt; and &lt;code&gt;sass-rails&lt;/code&gt;, to which he promptly cites frontend tooling written with Node.js that will do the job better and faster.&lt;/p&gt;
+
+&lt;p&gt;“Frontend tooling?” Don’t they just stick minified junk in a directory? After all, Rubyists know that JavaScript is the class-deprived single-file language of popups and scrolling marquees. It is the veritable poster child for languages bereft of module managers and plagued by global scope.&lt;/p&gt;
+
+&lt;h2 id="leverage-your-strengths-ie-going-our-separate-ways"&gt;Leverage Your Strengths. i.e. Going our Separate Ways.&lt;/h2&gt;
+
+&lt;p&gt;Although we are wont to admit it, Rails developers have an infamous reputation among the web community. &lt;code&gt;turbolinks&lt;/code&gt; was perhaps the most ironical blow to the face of client-side programming, but day-to-day Rails developers have a habit of littering templates with copious IDs and &lt;code&gt;div&lt;/code&gt;s in an effort to appease their leaky JavaScript files.&lt;/p&gt;
+
+&lt;p&gt;When it comes to vendor assets, the web community shrieks at this increasingly common style of Gemfiles:&lt;/p&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt; 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;uglifier&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;gt;= 1.3.0&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;coffee-rails&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;~&amp;gt; 4.0.0&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;jquery-rails&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;remotipart&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;jquery-ui-rails&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;jquery-ui-bootstrap-rails&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;bootstrap-sass&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;bootstrap-datepicker-rails&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pagedown-bootstrap-rails&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;font-awesome-sass-rails&amp;#39;&lt;/span&gt;
+&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;chosen-rails&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;In light of our shadowy past, what tools and workflows can we adopt to leverage conventions in both platforms while maximizing developer happiness?&lt;/p&gt;
+
+&lt;h2 id="hello-bower"&gt;Hello, Bower&lt;/h2&gt;
+
+&lt;p&gt;Your inconstant developer friend (from a startup you used to work at) tweets about &lt;a href="http://bower.io/"&gt;Bower.&lt;/a&gt; Okay! You add &lt;code&gt;gem "bower-rails"&lt;/code&gt; to your Gemfile to suppressed shouts of joy from your frontend cohort. He dives in to add &lt;a href="https://necolas.github.io/normalize.css/"&gt;normalize.css&lt;/a&gt; and a clean grid system, only to find there is no &lt;code&gt;bower.json&lt;/code&gt; file in the project. Confuzzled, he searches the directory tree and stumbles upon the empty and extensionless &lt;code&gt;Bowerfile&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Distressed, he decides to create a &lt;code&gt;bower.json&lt;/code&gt; configuration from scratch, then runs &lt;code&gt;bower install&lt;/code&gt;. However, Rails doesn’t seem to know anything about &lt;code&gt;bower_components&lt;/code&gt;, so he schedules a video conference with you.&lt;/p&gt;
+
+&lt;p&gt;While your colleague is trampling your beautiful bowerified-Rails setup, you come across some interesting configuration options in &lt;code&gt;config/application.rb&lt;/code&gt; while looking for a way to add &lt;code&gt;app/assets/fonts&lt;/code&gt; to the asset pipeline. As always in Rails, you find it’s as simple as:&lt;/p&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assets&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;paths&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;Rails&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;app&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;assets&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;fonts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;On the call, your frontend cohort upbraids your Bower setup on grounds that it is “unconventional” and represents a mixup of responsibilities. Managing a &lt;code&gt;Bowerfile&lt;/code&gt; to generate a &lt;code&gt;bower.json&lt;/code&gt; is to him the epitome of irony: who ever heard of a &lt;a href="http://asciicasts.com/episodes/43-ajax-with-rjs"&gt;Ruby DSL being used to generate JavaScript?&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;He continues: he says he already stripped out &lt;code&gt;bower-rails&lt;/code&gt; on his (private) branch and is able to install all components, but doesn’t know where to dump them for Rails’ asset pipeline. Despite your offense, you are struck with an epiphany: why can’t the &lt;code&gt;bower_components&lt;/code&gt; directory just be added to &lt;code&gt;config.assets.paths&lt;/code&gt;?&lt;/p&gt;
+
+&lt;p&gt;But not to seem deterred (the best developers are strongly opinionated), you advise him that &lt;code&gt;bower_components&lt;/code&gt; is a nonsensical place to put assets, as Rails has a directory for just such a purpose: &lt;code&gt;vendor/assets&lt;/code&gt;. However, Bower won’t unpackage JavaScript and CSS files into separate directories. As a compromise, you decide to install Bower packages under &lt;code&gt;vendor/assets/components&lt;/code&gt; and add it to the asset pipeline:&lt;/p&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;config&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;assets&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;paths&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="no"&gt;Rails&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;root&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;join&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;vendor&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;assets&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;components&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;Delighted, your frontend cohort quickly adds a &lt;code&gt;.bowerrc&lt;/code&gt; to tell Bower exactly where to dump these packages on any subsequent &lt;code&gt;bower install&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;directory&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;vendor/assets/components&amp;quot;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;h2 id="deployment"&gt;Deployment&lt;/h2&gt;
+
+&lt;p&gt;Over the lunch break, Mr. Bower has stripped the Gemfile of gems in the least related to assets. He even has the audacity to strip out &lt;code&gt;gem "jquery-rails"&lt;/code&gt; (incredibly, you discover there is a nice Bower package with the pertinent &lt;code&gt;rails-ujs&lt;/code&gt; file you still need for &lt;code&gt;remote: true&lt;/code&gt; links, and your cohort is only too eager to take control of the &lt;code&gt;jquery&lt;/code&gt; version from &lt;code&gt;bower.json&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;Satisfied with the pleasant compromise (and simultaneously relieved to relinquish responsibility of frontend assets), you merge your cohort’s lengthy pull-request (primarily subtractions) and deploy &lt;code&gt;master&lt;/code&gt; to Heroku before scootering to the kitchen for a few sticks of string cheese.&lt;/p&gt;
+
+&lt;p&gt;To your chagrin, the deployment failed: during the asset compilation step, it complained that it couldn’t find &lt;code&gt;jquery&lt;/code&gt;. Of course, you forgot to commit the files in &lt;code&gt;vendor/assets/components&lt;/code&gt;; but you certainly don’t want to pollute git history with millions of vendor additions. Obviously, Heroku ought to run &lt;code&gt;bower install&lt;/code&gt; to grab the assets before compilation. But how?&lt;/p&gt;
+
+&lt;p&gt;Another pal (not the one from the startup) suggests you look into &lt;a href="https://devcenter.heroku.com/articles/buildpacks"&gt;custom buildpacks,&lt;/a&gt; an interesting Heroku feature that lets you bypass the language auto-detection normally used to compile apps. With some investigation, you find you can instruct Heroku to compile first as a Node.js app, &lt;em&gt;then&lt;/em&gt; finish compilation as a Rails app with the &lt;a href="https://github.com/ddollar/heroku-buildpack-multi"&gt;buildpack-multi.&lt;/a&gt; It’s as simple as adding a &lt;code&gt;.buildpacks&lt;/code&gt; file:&lt;/p&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;https://github.com/heroku/heroku-buildpack-nodejs
+https://github.com/heroku/heroku-buildpack-ruby
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;After a couple attempts (the first time, you forgot to pluralize &lt;code&gt;.buildpacks&lt;/code&gt;), it seems the file is ignored. A quick search, and you quickly update your &lt;code&gt;BUILDPACK_URL&lt;/code&gt;:&lt;/p&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;heroku config:add &lt;span class="nv"&gt;BUILDPACK_URL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;https://github.com/ddollar/heroku-buildpack-multi.git
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;Just before you hit return, your smartphone buzzes with an email from Heroku: multi-buildpacks are now &lt;a href="https://github.com/heroku/heroku-buildpack-multi"&gt;officially supported on their own fork,&lt;/a&gt; so you update the &lt;code&gt;BUILDPACK_URL&lt;/code&gt; again:&lt;/p&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;heroku config:add &lt;span class="nv"&gt;BUILDPACK_URL&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;https://github.com/heroku/heroku-buildpack-multi.git
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;It seems that Node.js apps expect a &lt;code&gt;package.json&lt;/code&gt; manifest, but what for? Your cohort reminds you that Bower is itself an NPM package, so you should install and run it as part of the build process:&lt;/p&gt;
+
+&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;1
+2
+3
+4
+5
+6
+7
+8
+9&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;name&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;my-app&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;devDependencies&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;bower&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;latest&amp;quot;&lt;/span&gt;
+  &lt;span class="p"&gt;},&lt;/span&gt;
+  &lt;span class="nt"&gt;&amp;quot;scripts&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="nt"&gt;&amp;quot;postinstall&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;./node_modules/bower/bin/bower install&amp;quot;&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;p&gt;On your last stick of string cheese, the deploy completes successfully with no apparent changes to your site. You and your cohort are so pleased, you decide to present it to your coworkers as a &lt;a href="https://vimeo.com/103926564"&gt;Tech Talk.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id="wrap-up"&gt;Wrap-up&lt;/h2&gt;
+
+&lt;p&gt;Want the Cliff notes version? &lt;a href="https://gist.github.com/nybblr/99f16afa33d71382a33b"&gt;I’ve compiled the additions into a gist.&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Do you have other patterns or tools you find enhance collaboration between frontend and backend?&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Kissing Simplicity Goodbye
 </title>
