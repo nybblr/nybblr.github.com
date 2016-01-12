@@ -5,7 +5,7 @@
   <id>http://nybblr.com/</id>
   <link href="http://nybblr.com/"/>
   <link href="http://nybblr.com/feed.xml" rel="self"/>
-  <updated>2015-01-02T00:00:00Z</updated>
+  <updated>2015-01-02T00:00:00+00:00</updated>
   <author>
     <name>Jonathan Martin</name>
   </author>
@@ -14,8 +14,8 @@
 </title>
     <link rel="alternate" href="/2015/01/02/backend-meet-frontend/"/>
     <id>/2015/01/02/backend-meet-frontend/</id>
-    <published>2015-01-02T00:00:00Z</published>
-    <updated>2015-01-02T00:00:00Z</updated>
+    <published>2015-01-02T00:00:00+00:00</published>
+    <updated>2015-01-02T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -164,8 +164,8 @@ https://github.com/heroku/heroku-buildpack-ruby
 </title>
     <link rel="alternate" href="/2013/09/24/kissing-simplicity-goodbye/"/>
     <id>/2013/09/24/kissing-simplicity-goodbye/</id>
-    <published>2013-09-24T00:00:00Z</published>
-    <updated>2013-09-24T00:00:00Z</updated>
+    <published>2013-09-24T00:00:00+00:00</published>
+    <updated>2013-09-24T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -491,8 +491,8 @@ https://github.com/heroku/heroku-buildpack-ruby
 </title>
     <link rel="alternate" href="/2012/12/09/how-santa-claus-stole-christmas/"/>
     <id>/2012/12/09/how-santa-claus-stole-christmas/</id>
-    <published>2012-12-09T00:00:00Z</published>
-    <updated>2012-12-09T00:00:00Z</updated>
+    <published>2012-12-09T00:00:00+00:00</published>
+    <updated>2012-12-09T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -576,8 +576,8 @@ https://github.com/heroku/heroku-buildpack-ruby
 </title>
     <link rel="alternate" href="/2011/10/31/the-scariest-thing-you-can-do-this-halloween/"/>
     <id>/2011/10/31/the-scariest-thing-you-can-do-this-halloween/</id>
-    <published>2011-10-31T00:00:00Z</published>
-    <updated>2011-10-31T00:00:00Z</updated>
+    <published>2011-10-31T00:00:00+00:00</published>
+    <updated>2011-10-31T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -659,8 +659,8 @@ https://github.com/heroku/heroku-buildpack-ruby
 </title>
     <link rel="alternate" href="/2011/09/01/etymology-and-the-sway-of-time/"/>
     <id>/2011/09/01/etymology-and-the-sway-of-time/</id>
-    <published>2011-09-01T00:00:00Z</published>
-    <updated>2011-09-01T00:00:00Z</updated>
+    <published>2011-09-01T00:00:00+00:00</published>
+    <updated>2011-09-01T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -754,8 +754,8 @@ https://github.com/heroku/heroku-buildpack-ruby
 </title>
     <link rel="alternate" href="/2011/06/28/why-you-should-use-ancestry/"/>
     <id>/2011/06/28/why-you-should-use-ancestry/</id>
-    <published>2011-06-28T00:00:00Z</published>
-    <updated>2011-06-28T00:00:00Z</updated>
+    <published>2011-06-28T00:00:00+00:00</published>
+    <updated>2011-06-28T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -795,8 +795,8 @@ https://github.com/heroku/heroku-buildpack-ruby
 </title>
     <link rel="alternate" href="/2011/05/30/ten-tips-for-college-freshmen/"/>
     <id>/2011/05/30/ten-tips-for-college-freshmen/</id>
-    <published>2011-05-30T00:00:00Z</published>
-    <updated>2011-05-30T00:00:00Z</updated>
+    <published>2011-05-30T00:00:00+00:00</published>
+    <updated>2011-05-30T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -865,8 +865,8 @@ https://github.com/heroku/heroku-buildpack-ruby
 </title>
     <link rel="alternate" href="/2011/05/17/rails-3-forcing-ssl/"/>
     <id>/2011/05/17/rails-3-forcing-ssl/</id>
-    <published>2011-05-17T00:00:00Z</published>
-    <updated>2011-05-17T00:00:00Z</updated>
+    <published>2011-05-17T00:00:00+00:00</published>
+    <updated>2011-05-17T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -1009,8 +1009,8 @@ https://github.com/heroku/heroku-buildpack-ruby
 </title>
     <link rel="alternate" href="/2011/05/13/insatiable-desire/"/>
     <id>/2011/05/13/insatiable-desire/</id>
-    <published>2011-05-13T00:00:00Z</published>
-    <updated>2011-05-13T00:00:00Z</updated>
+    <published>2011-05-13T00:00:00+00:00</published>
+    <updated>2011-05-13T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -1066,8 +1066,8 @@ To shun the heaven that leads men to this hell.”&lt;br /&gt;
 </title>
     <link rel="alternate" href="/2011/05/06/ruby-on-rails-top-ten-gems/"/>
     <id>/2011/05/06/ruby-on-rails-top-ten-gems/</id>
-    <published>2011-05-06T00:00:00Z</published>
-    <updated>2011-05-06T00:00:00Z</updated>
+    <published>2011-05-06T00:00:00+00:00</published>
+    <updated>2011-05-06T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -1339,8 +1339,8 @@ To shun the heaven that leads men to this hell.”&lt;br /&gt;
 </title>
     <link rel="alternate" href="/2011/05/03/reading-practices-and-comprehension/"/>
     <id>/2011/05/03/reading-practices-and-comprehension/</id>
-    <published>2011-05-03T00:00:00Z</published>
-    <updated>2011-05-03T00:00:00Z</updated>
+    <published>2011-05-03T00:00:00+00:00</published>
+    <updated>2011-05-03T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -1371,8 +1371,8 @@ To shun the heaven that leads men to this hell.”&lt;br /&gt;
 </title>
     <link rel="alternate" href="/2011/05/02/ruby-extension-html-truncation/"/>
     <id>/2011/05/02/ruby-extension-html-truncation/</id>
-    <published>2011-05-02T00:00:00Z</published>
-    <updated>2011-05-02T00:00:00Z</updated>
+    <published>2011-05-02T00:00:00+00:00</published>
+    <updated>2011-05-02T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -1742,8 +1742,8 @@ To shun the heaven that leads men to this hell.”&lt;br /&gt;
 </title>
     <link rel="alternate" href="/2011/04/30/will-predestination-and-calvinism/"/>
     <id>/2011/04/30/will-predestination-and-calvinism/</id>
-    <published>2011-04-30T00:00:00Z</published>
-    <updated>2011-04-30T00:00:00Z</updated>
+    <published>2011-04-30T00:00:00+00:00</published>
+    <updated>2011-04-30T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -1832,8 +1832,8 @@ To shun the heaven that leads men to this hell.”&lt;br /&gt;
 </title>
     <link rel="alternate" href="/2011/04/29/rails-3-action-mailer/"/>
     <id>/2011/04/29/rails-3-action-mailer/</id>
-    <published>2011-04-29T00:00:00Z</published>
-    <updated>2011-04-29T00:00:00Z</updated>
+    <published>2011-04-29T00:00:00+00:00</published>
+    <updated>2011-04-29T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
@@ -1979,8 +1979,8 @@ To shun the heaven that leads men to this hell.”&lt;br /&gt;
 </title>
     <link rel="alternate" href="/2011/04/24/two-sinners-and-a-saint/"/>
     <id>/2011/04/24/two-sinners-and-a-saint/</id>
-    <published>2011-04-24T00:00:00Z</published>
-    <updated>2011-04-24T00:00:00Z</updated>
+    <published>2011-04-24T00:00:00+00:00</published>
+    <updated>2011-04-24T00:00:00+00:00</updated>
     <author>
       <name>LaJoie Ward</name>
     </author>
@@ -2033,8 +2033,8 @@ To shun the heaven that leads men to this hell.”&lt;br /&gt;
 </title>
     <link rel="alternate" href="/2011/04/24/rails-3-auto-require/"/>
     <id>/2011/04/24/rails-3-auto-require/</id>
-    <published>2011-04-24T00:00:00Z</published>
-    <updated>2011-04-24T00:00:00Z</updated>
+    <published>2011-04-24T00:00:00+00:00</published>
+    <updated>2011-04-24T00:00:00+00:00</updated>
     <author>
       <name>Jonathan Martin</name>
     </author>
