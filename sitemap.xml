@@ -61,6 +61,9 @@
     <loc>http://nybblr.com/2015/01/02/backend-meet-frontend/</loc>
   </url>
   <url>
+    <loc>http://nybblr.com/2016/01/12/new-year-new-blog/</loc>
+  </url>
+  <url>
     <loc>http://nybblr.com/pages/about-me/</loc>
   </url>
   <url>
@@ -71,6 +74,9 @@
   </url>
   <url>
     <loc>http://nybblr.com/CNAME</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/posts/new-year-new-blog/</loc>
   </url>
   <url>
     <loc>http://nybblr.com/posts/backend-meet-frontend/</loc>
@@ -262,6 +268,24 @@
     <loc>http://nybblr.com/tags/better-together/</loc>
   </url>
   <url>
+    <loc>http://nybblr.com/tags/photography/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/tags/ghost/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/tags/node/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/2016/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/2016/01/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/2016/01/12/</loc>
+  </url>
+  <url>
     <loc>http://nybblr.com/2015/</loc>
   </url>
   <url>
@@ -350,6 +374,9 @@
   </url>
   <url>
     <loc>http://nybblr.com/page/4/</loc>
+  </url>
+  <url>
+    <loc>http://nybblr.com/page/5/</loc>
   </url>
   <url>
     <loc>http://nybblr.com/tags/rails/page/2/</loc>

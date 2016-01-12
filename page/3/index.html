@@ -34,6 +34,35 @@
               <header>
                 <nav>
                   <time>
+                    <a href="/2011/05/">May 17</a>
+                    <span class='year'>
+                      <a href="/2011/">2011</a>
+                    </span>
+                  </time>
+                  <span>development</span>
+                </nav>
+                <h1 id="rails-3-forcing-ssl20110517rails-3-forcing-ssl"><a href="/2011/05/17/rails-3-forcing-ssl/">Rails 3: Forcing SSL</a></h1>
+                <h2>~ by Jonathan Martin</h2>
+              </header>
+              <section>
+                <p><em>Once again, I found myself beating my way through a website todo, and again I painfully managed to complete the task. Perhaps I can spare you some of that pain with this discussion of SSL.</em></p>
+                
+                <p>A nice convenience with the price of two late nights spent forcing my way through the seemingly most ridiculous bugs. What objective snatched away those precious hours of sleep?</p>
+                
+                <p>Forcing SSL. That’s it. I implemented an administrator interface to my blog so I can easily post, comment, etc. (or else I’d never get time to write) however I was bugged every time I saw the basic http auth dialog with its warning: <strong>Your password will be sent unencrypted.</strong></p>
+                
+                <p>Naturally, I’m a conspiracy theorist and anticipate some foreign nation overtaking my blog and using it to bring about the end of the world (ok not really). However, having to type in <code>https://</code> every time I want to securely do my magic jumbo gets really irritating, and too many times have I authenticated without SSL. Way too many times.</p>
+                
+                <p>
+                <a class="readmore" href="/2011/05/17/rails-3-forcing-ssl/">Read more.</a>
+              </section>
+            </article>
+          </li>
+          <li>
+            <article>
+              <header>
+                <nav>
+                  <time>
                     <a href="/2011/05/">May 13</a>
                     <span class='year'>
                       <a href="/2011/">2011</a>
@@ -106,43 +135,6 @@
                 
                 <p>
                 <a class="readmore" href="/2011/05/03/reading-practices-and-comprehension/">Read more.</a>
-              </section>
-            </article>
-          </li>
-          <li>
-            <article>
-              <header>
-                <nav>
-                  <time>
-                    <a href="/2011/05/">May 2</a>
-                    <span class='year'>
-                      <a href="/2011/">2011</a>
-                    </span>
-                  </time>
-                  <span>development</span>
-                </nav>
-                <h1 id="ruby-extension-html-truncation20110502ruby-extension-html-truncation"><a href="/2011/05/02/ruby-extension-html-truncation/">Ruby Extension: HTML Truncation</a></h1>
-                <h2>~ by Jonathan Martin</h2>
-              </header>
-              <section>
-                <p><em>Another tip (err hurdle) I came across during the production of this blog — truncating an HTML string. Easy, right?</em></p>
-                
-                <p>It seems simple enough: shorten some basic text content from a long entry. It’s extremely popular in blogs, catalogs, portfolios, etc. and with good reason — the average browser wants to find content through screening, not mass scrolling.</p>
-                
-                <p>But a good trimmer must keep a few things in mind.</p>
-                
-                <ul>
-                  <li>Don’t split words</li>
-                  <li>Recognize/respect HTML tags</li>
-                  <li>Parse HTML according to standards</li>
-                </ul>
-                
-                <p>These add up to some pretty terse requirements once you actually get to coding. First, unless we want to manually parse HTML, we’ll have to use some standards based parser and loop through all the elements, until the specified number of characters/words (excluding tags!) is exceeded, at which point we append a user-defined tail and discard all other tags.</p>
-                
-                <p><strong>Update:</strong> <em>the latest version of this handy widget is now available as a gem! Check it out at <a href="http://rubygems.org/gems/butter">rubygems.org/gems/butter</a> or bundle it with gem install butter.</em></p>
-                
-                <p>
-                <a class="readmore" href="/2011/05/02/ruby-extension-html-truncation/">Read more.</a>
               </section>
             </article>
           </li>

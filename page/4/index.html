@@ -34,6 +34,43 @@
               <header>
                 <nav>
                   <time>
+                    <a href="/2011/05/">May 2</a>
+                    <span class='year'>
+                      <a href="/2011/">2011</a>
+                    </span>
+                  </time>
+                  <span>development</span>
+                </nav>
+                <h1 id="ruby-extension-html-truncation20110502ruby-extension-html-truncation"><a href="/2011/05/02/ruby-extension-html-truncation/">Ruby Extension: HTML Truncation</a></h1>
+                <h2>~ by Jonathan Martin</h2>
+              </header>
+              <section>
+                <p><em>Another tip (err hurdle) I came across during the production of this blog — truncating an HTML string. Easy, right?</em></p>
+                
+                <p>It seems simple enough: shorten some basic text content from a long entry. It’s extremely popular in blogs, catalogs, portfolios, etc. and with good reason — the average browser wants to find content through screening, not mass scrolling.</p>
+                
+                <p>But a good trimmer must keep a few things in mind.</p>
+                
+                <ul>
+                  <li>Don’t split words</li>
+                  <li>Recognize/respect HTML tags</li>
+                  <li>Parse HTML according to standards</li>
+                </ul>
+                
+                <p>These add up to some pretty terse requirements once you actually get to coding. First, unless we want to manually parse HTML, we’ll have to use some standards based parser and loop through all the elements, until the specified number of characters/words (excluding tags!) is exceeded, at which point we append a user-defined tail and discard all other tags.</p>
+                
+                <p><strong>Update:</strong> <em>the latest version of this handy widget is now available as a gem! Check it out at <a href="http://rubygems.org/gems/butter">rubygems.org/gems/butter</a> or bundle it with gem install butter.</em></p>
+                
+                <p>
+                <a class="readmore" href="/2011/05/02/ruby-extension-html-truncation/">Read more.</a>
+              </section>
+            </article>
+          </li>
+          <li>
+            <article>
+              <header>
+                <nav>
+                  <time>
                     <a href="/2011/04/">Apr 30</a>
                     <span class='year'>
                       <a href="/2011/">2011</a>
@@ -110,34 +147,10 @@
               </section>
             </article>
           </li>
-          <li>
-            <article>
-              <header>
-                <nav>
-                  <time>
-                    <a href="/2011/04/">Apr 24</a>
-                    <span class='year'>
-                      <a href="/2011/">2011</a>
-                    </span>
-                  </time>
-                  <span>development</span>
-                </nav>
-                <h1 id="rails-3-auto-require20110424rails-3-auto-require"><a href="/2011/04/24/rails-3-auto-require/">Rails 3: Auto Require</a></h1>
-                <h2>~ by Jonathan Martin</h2>
-              </header>
-              <section>
-                <p>During the process of coding my blog, I came across the need for a truncation feature (another post in and of itself). So I made a new file under the lib directory called string.rb which added a truncate_html function to the String class. Lo and behold, whenever I called the function, the console printed an error stating that no such function existed.</p>
-                
-                <p>In Rails 3, lib files are lazy loaded — this can be adjusted by adding the first line to the config/application.rb file. Restarted the server, but still I received the error.</p>
-                
-                <p>
-                <a class="readmore" href="/2011/04/24/rails-3-auto-require/">Read more.</a>
-              </section>
-            </article>
-          </li>
         </ul>
         <nav class='pagination'>
           <a class="previous" href="/page/3/">&laquo; Newer articles</a>
+          <a class="next" href="/page/5/">Older articles &raquo;</a>
         </nav>
       </section>
     </article>

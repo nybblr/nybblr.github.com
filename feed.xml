@@ -5,10 +5,44 @@
   <id>http://nybblr.com/</id>
   <link href="http://nybblr.com/"/>
   <link href="http://nybblr.com/feed.xml" rel="self"/>
-  <updated>2015-01-02T00:00:00+00:00</updated>
+  <updated>2016-01-12T00:00:00+00:00</updated>
   <author>
     <name>Jonathan Martin</name>
   </author>
+  <entry>
+    <title>A New Year, a New Blog!
+</title>
+    <link rel="alternate" href="/2016/01/12/new-year-new-blog/"/>
+    <id>/2016/01/12/new-year-new-blog/</id>
+    <published>2016-01-12T00:00:00+00:00</published>
+    <updated>2016-01-12T00:00:00+00:00</updated>
+    <author>
+      <name>Jonathan Martin</name>
+    </author>
+    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;TL;DR: &lt;a href="https://blog.yellowscale.com"&gt;Checkout my new photography blog&lt;/a&gt;, it’s powered by Ghost!&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve become strangely addicted to exploring and photographing new places these past 2 years as I traveled through Europe as a speaker and the US as an instructor at Big Nerd Ranch.&lt;/p&gt;
+
+&lt;p&gt;I’ll be blogging about my photographic adventures on &lt;a href="https://blog.yellowscale.com"&gt;my new photography blog&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;&lt;em&gt;TL;DR: &lt;a href="https://blog.yellowscale.com"&gt;Checkout my new photography blog&lt;/a&gt;, it’s powered by Ghost!&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ve become strangely addicted to exploring and photographing new places these past 2 years as I traveled through Europe as a speaker and the US as an instructor at Big Nerd Ranch.&lt;/p&gt;
+
+&lt;p&gt;I’ll be blogging about my photographic adventures on &lt;a href="https://blog.yellowscale.com"&gt;my new photography blog&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;/p&gt;
+
+&lt;p&gt;I’ll keep blogging here (as regularly as usual, lol) on all things code, but the &lt;em&gt;Yellowscale Blog&lt;/em&gt; will focus on photography and exploration. &lt;a href="https://blog.yellowscale.com"&gt;So if you like that sort of thing…&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Oh, and it’s &lt;em&gt;powered by &lt;a href="https://ghost.org/"&gt;Ghost&lt;/a&gt;&lt;/em&gt;—a free, open source blogging platform that embraces minimalism and Markdown. Since it’s written with Node.js and Ember, I’ve felt right at home making tweaks.&lt;/p&gt;
+
+&lt;p&gt;Thanks to the super smooth setup, &lt;em&gt;I deployed my first Ghost blog in 30 minutes&lt;/em&gt; on &lt;a href="https://www.openshift.com/"&gt;OpenShift&lt;/a&gt;. It took a little longer (4 hours) to set up SSL, but after some googling the site connects over HTTPS for free!&lt;/p&gt;
+
+&lt;p&gt;Expect a blog on the Ghost deployment + SSL process. &lt;strong&gt;Best on your own 2016 goals!&lt;/strong&gt;&lt;/p&gt;
+</content>
+  </entry>
   <entry>
     <title>Backend, Meet Frontend: Managing Assets with Bower
 </title>
